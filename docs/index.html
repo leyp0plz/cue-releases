@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cue</title>
+<meta name="description" content="Cue: Clips aus YouTube, TikTok und Instagram in höchster Qualität. Für Mac und Windows.">
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+  :root {
+    --bg: #121018; --bg2: #1a1722; --card: #221e2c; --line: #2f2a3b;
+    --text: #f4f2f8; --dim: #a49fb2; --faint: #6f6a7d;
+    --blue: #0a84ff; --orange: #ff8c28; --pink: #f0326e; --green: #32d74b; --red: #ff5f57;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; text-decoration: none; }
+  .brand img { width: 36px; height: 36px; border-radius: 9px; }
+  .lang { display: flex; gap: 4px; background: var(--card); border-radius: 10px; padding: 3px; }
+  .lang button { border: 0; background: transparent; color: var(--dim); font: inherit; font-size: 14px; padding: 5px 12px; border-radius: 8px; cursor: pointer; }
+  .lang button.on { background: var(--blue); color: #fff; }
+
+  .hero { text-align: center; padding: 34px 0 10px; }
+  .hero h1 { font-size: clamp(44px, 9vw, 76px); line-height: 1; margin: 34px 0 14px; letter-spacing: -0.02em; }
+  .hero p.lead { color: var(--dim); font-size: clamp(17px, 2.4vw, 21px); max-width: 640px; margin: 0 auto; }
+
+  /* Wellenform mit zwei Cue Markern, wie die Startanimation der App */
+  .wave { position: relative; height: 150px; max-width: 560px; margin: 8px auto 0; display: flex; align-items: center; justify-content: center; gap: var(--gap, 6px); }
+  .wave i { display: block; width: var(--bw, 10px); flex: none; border-radius: 6px; background: rgba(255,255,255,.28); height: calc(var(--h) * 1%); animation: grow .9s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d); }
+  .wave i.hot { background: linear-gradient(#ffc446, var(--pink)); animation: grow .9s cubic-bezier(.2,.8,.2,1) both, pulse 2.4s ease-in-out 1.2s infinite; animation-delay: var(--d), calc(var(--d) + 1.1s); }
+  .wave .band { position: absolute; top: 0; bottom: 0; border-radius: 10px; background: rgba(255,120,40,.13); animation: fade 1s 1s both; }
+  .wave .mark { position: absolute; top: -12px; bottom: -6px; width: 3px; border-radius: 2px; background: #fff; animation: slide .5s cubic-bezier(.55,0,.9,.6) .75s both; }
+  .wave .mark::before { content: ""; position: absolute; top: -12px; left: -9px; border: 10px solid transparent; border-top: 14px solid var(--orange); }
+  @keyframes grow { from { height: 4px; opacity: .2; } }
+  @keyframes pulse { 50% { transform: scaleY(1.08); } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes slide { from { opacity: 0; transform: translateX(var(--from)); } }
+  @media (prefers-reduced-motion: reduce) { .wave * { animation: none !important; } }
+
+  .downloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 40px 0 10px; }
+  .dl { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 6px; }
+  .dl h2 { margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+  .dl .ver { color: var(--dim); font-size: 14px; }
+  .dl .req { color: var(--faint); font-size: 13px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 999px; padding: 12px 22px; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .btn.primary { background: var(--blue); color: #fff; }
+  .btn.primary:hover { background: #2a96ff; }
+  .btn.primary:disabled { background: #3a3646; color: var(--faint); cursor: default; }
+  .dl .btn { margin-top: 12px; align-self: flex-start; }
+
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 30px 0; }
+  .feature { background: var(--bg2); border-radius: 14px; padding: 16px 18px; }
+  .feature b { display: block; margin-bottom: 2px; }
+  .feature span { color: var(--dim); font-size: 14px; }
+
+  section { margin: 56px 0; }
+  section h2.title { font-size: 28px; margin: 0 0 6px; }
+  section p.sub { color: var(--dim); margin: 0 0 20px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .steps .box { background: var(--card); border-radius: 16px; padding: 20px 22px; }
+  .steps h3 { margin: 0 0 8px; font-size: 18px; }
+  .steps ol { margin: 0; padding-left: 20px; color: var(--dim); }
+  .steps li { margin: 4px 0; }
+  code { background: #2c2738; color: var(--text); padding: 1px 6px; border-radius: 6px; font: 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  form.req { background: var(--card); border-radius: 18px; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  form.req label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 14px; }
+  form.req label.full { grid-column: 1 / -1; }
+  form.req .opt { color: var(--faint); font-weight: 400; }
+  form.req input, form.req textarea {
+    width: 100%; background: #16131d; color: var(--text); border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 12px; font: inherit; font-weight: 400;
+  }
+  form.req textarea { min-height: 96px; resize: vertical; }
+  form.req input:focus, form.req textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(10,132,255,.25); }
+  form.req .row { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  form.req .hint { color: var(--faint); font-size: 13px; }
+  .hp { position: absolute; left: -9999px; }
+  .msg { font-size: 15px; }
+  .msg.ok { color: var(--green); } .msg.err { color: var(--red); }
+  @media (max-width: 620px) { form.req { grid-template-columns: 1fr; } }
+
+  footer { border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; padding: 22px 0 40px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  /* Sprache: nur ausblenden, sonst behält jedes Element seine eigene Darstellung */
+  html[lang="de"] [data-en], html[lang="en"] [data-de] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#"><img src="logo.png" alt="">Cue</a>
+    <div class="lang" role="group" aria-label="Sprache / Language">
+      <button type="button" data-set="de" class="on">Deutsch</button>
+      <button type="button" data-set="en">English</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="wave" id="wave" aria-hidden="true"></div>
+    <h1>Cue</h1>
+    <p class="lead" data-de>Clips aus YouTube, TikTok und Instagram in höchster Qualität. Link einfügen, Start und Ende wählen, fertig.</p>
+    <p class="lead" data-en>Clips from YouTube, TikTok and Instagram in the highest quality. Paste a link, pick start and end, done.</p>
+  </div>
+
+  <div class="downloads">
+    <div class="dl">
+      <h2><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9s-2-.9-3.4-.9c-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 5c.7-.9 1.2-2 1.1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.1.1 2.3-.6 3-1.5z"/></svg>Mac</h2>
+      <div class="ver"><span data-de>Version</span><span data-en>Version</span> 7.4</div>
+      <div class="req" data-de>macOS 14 oder neuer, Apple Silicon und Intel</div>
+      <div class="req" data-en>macOS 14 or newer, Apple silicon and Intel</div>
+      <a class="btn primary" href="Cue-fuer-Mac.zip" download><span data-de>Für Mac laden</span><span data-en>Download for Mac</span></a>
+    </div>
+    <div class="dl">
+      <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 4.5 10 3.4v7.9H2V4.5zm0 15 8 1.1v-7.8H2v6.7zm9 1.2 11 1.5v-9.4H11v7.9zm0-17.4v8h11V1.8L11 3.3z"/></svg>Windows</h2>
+      <div class="ver"><span data-de>Version</span><span data-en>Version</span> 1.5</div>
+      <div class="req" data-de>Windows 10 oder 11</div>
+      <div class="req" data-en>Windows 10 or 11</div>
+      <a class="btn primary" href="Cue-fuer-Windows.zip" download><span data-de>Für Windows laden</span><span data-en>Download for Windows</span></a>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature"><b data-de>Audio verlustfrei</b><b data-en>Lossless audio</b><span data-de>Apple Lossless, 24 bit, ideal für Rekordbox</span><span data-en>Apple Lossless, 24 bit, great for Rekordbox</span></div>
+    <div class="feature"><b data-de>Video bis 4K</b><b data-en>Video up to 4K</b><span data-de>H.264 mit Ton, läuft überall</span><span data-en>H.264 with sound, plays everywhere</span></div>
+    <div class="feature"><b data-de>Genau geschnitten</b><b data-en>Precise cuts</b><span data-de>Start und Ende, z.B. 2.22.13</span><span data-en>Start and end, e.g. 2.22.13</span></div>
+  </div>
+
+  <section>
+    <h2 class="title" data-de>Installieren</h2><h2 class="title" data-en>Install</h2>
+    <p class="sub" data-de>Cue ist gesperrt, bis du einen Schlüssel von Luc Porchet eingibst.</p>
+    <p class="sub" data-en>Cue stays locked until you enter a key from Luc Porchet.</p>
+    <div class="steps">
+      <div class="box">
+        <h3>Mac</h3>
+        <ol data-de>
+          <li>ZIP öffnen.</li>
+          <li>Terminal öffnen, <code>bash </code> tippen (mit Leerzeichen).</li>
+          <li><code>Cue installieren.command</code> ins Terminal ziehen, Enter drücken.</li>
+          <li>Schlüssel einfügen, auf <b>Unlock</b> klicken.</li>
+        </ol>
+        <ol data-en>
+          <li>Open the ZIP.</li>
+          <li>Open Terminal, type <code>bash </code> (with a space).</li>
+          <li>Drag <code>Cue installieren.command</code> into Terminal, press Enter.</li>
+          <li>Paste your key, click <b>Unlock</b>.</li>
+        </ol>
+      </div>
+      <div class="box">
+        <h3>Windows</h3>
+        <ol data-de>
+          <li>ZIP rechts klicken, „Alle extrahieren“.</li>
+          <li><code>Cue installieren.bat</code> doppelklicken.</li>
+          <li>Bei „Windows hat den PC geschützt“: „Weitere Informationen“, „Trotzdem ausführen“.</li>
+          <li>Schlüssel einfügen, auf <b>Freischalten</b> klicken.</li>
+        </ol>
+        <ol data-en>
+          <li>Right-click the ZIP, “Extract All”.</li>
+          <li>Double-click <code>Cue installieren.bat</code>.</li>
+          <li>If “Windows protected your PC” appears: “More info”, “Run anyway”.</li>
+          <li>Paste your key, click <b>Unlock</b>.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="key">
+    <h2 class="title" data-de>Schlüssel anfragen</h2><h2 class="title" data-en>Request a key</h2>
+    <p class="sub" data-de>Luc Porchet erhält deine Anfrage verschlüsselt und schickt dir den Schlüssel per Mail.</p>
+    <p class="sub" data-en>Luc Porchet receives your request encrypted and sends you the key by email.</p>
+    <form class="req" id="req" novalidate>
+      <label><span data-de>Vorname</span><span data-en>First name</span><input name="first" autocomplete="given-name" required maxlength="80"></label>
+      <label><span data-de>Name</span><span data-en>Last name</span><input name="last" autocomplete="family-name" required maxlength="80"></label>
+      <label class="full"><span data-de>E-Mail</span><span data-en>Email</span><input name="mail" type="email" autocomplete="email" required maxlength="160"></label>
+      <label class="full"><span><span data-de>Grund</span><span data-en>Reason</span> <span class="opt" data-de>(optional)</span><span class="opt" data-en>(optional)</span></span><textarea name="reason" maxlength="1000"></textarea></label>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="row">
+        <button class="btn primary" type="submit" id="send"><span data-de>Anfrage senden</span><span data-en>Send request</span></button>
+        <span class="msg" id="msg" role="status"></span>
+      </div>
+      <div class="row hint" data-de>Deine Angaben sind nur für Luc Porchet lesbar und werden nur für den Schlüssel verwendet.</div>
+      <div class="row hint" data-en>Only Luc Porchet can read your details. They are only used for your key.</div>
+    </form>
+  </section>
+
+  <footer>
+    <span>© 2026 Luc Porchet</span>
+    <span data-de>Nur für den privaten Gebrauch. Heruntergeladene Inhalte nicht weiterverbreiten.</span>
+    <span data-en>For private use only. Do not redistribute downloaded content.</span>
+    <span data-de>Stand 22.10.2026</span><span data-en>Updated 22.10.2026</span>
+  </footer>
+</div>
+
+<script>
+// Werte, die Cue Admin beim Veröffentlichen einsetzt
+const CFG = { repo: "", tok: "", pub: "" };
+
+// Sprache
+const T = (de, en) => document.documentElement.lang === "en" ? en : de;
+function setLang(l) {
+  document.documentElement.lang = l;
+  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.set === l));
+  try { localStorage.setItem("cue-lang", l); } catch (e) {}
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.set)));
+let start = "de";
+try { start = localStorage.getItem("cue-lang") || (navigator.language || "de").slice(0, 2); } catch (e) {}
+setLang(start === "de" ? "de" : (start === "en" ? "en" : "de"));
+
+// Wellenform aufbauen (gleiche Höhen wie das App Icon); Balkenbreite passt sich der Bildschirmbreite an
+(function () {
+  const h = [18,30,22,42,34,55,48,72,62,90,78,100,84,68,88,60,74,46,56,36,44,26,32,20];
+  const w = document.getElementById("wave");
+  const n = h.length, avail = Math.min(560, w.clientWidth || 560) - 20;
+  const bw = Math.max(4, Math.min(10, Math.floor(avail / (n * 1.6)))), gap = Math.max(3, Math.round(bw * 0.6));
+  const total = n * bw + (n - 1) * gap;
+  w.style.setProperty("--bw", bw + "px"); w.style.setProperty("--gap", gap + "px");
+  h.forEach((v, i) => {
+    const el = document.createElement("i");
+    el.style.setProperty("--h", v * 0.8);
+    el.style.setProperty("--d", (Math.abs(i - (n - 1) / 2) / (n / 2) * 0.38) + "s");
+    if (i >= 7 && i < 16) el.className = "hot";
+    w.appendChild(el);
+  });
+  const x = i => `calc(50% - ${total / 2}px + ${i * (bw + gap) - gap / 2}px)`;
+  const band = document.createElement("div"); band.className = "band";
+  band.style.left = x(7); band.style.width = `${9 * (bw + gap)}px`; w.appendChild(band);
+  [[7, "-160px"], [16, "160px"]].forEach(([i, from]) => {
+    const m = document.createElement("div"); m.className = "mark";
+    m.style.left = `calc(${x(i)} - 1.5px)`; m.style.setProperty("--from", from); w.appendChild(m);
+  });
+})();
+
+// Verschlüsseln für Luc: X25519 mit seinem öffentlichen Schlüssel, HKDF-SHA256 (salt "cue-request",
+// info = eigener öffentlicher Schlüssel + seiner), AES-256-GCM. Ergebnis: base64(eigener Schlüssel | IV | Daten+Tag)
+const enc = s => new TextEncoder().encode(s);
+const join = (...a) => { const o = new Uint8Array(a.reduce((n, x) => n + x.length, 0)); let p = 0; a.forEach(x => { o.set(x, p); p += x.length; }); return o; };
+const b64 = u => { let s = ""; u.forEach(c => s += String.fromCharCode(c)); return btoa(s); };
+const unb64 = s => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((s.length + 3) % 4)), c => c.charCodeAt(0));
+async function seal(obj) {
+  const admin = unb64(CFG.pub);
+  const eph = await crypto.subtle.generateKey({ name: "X25519" }, true, ["deriveBits"]);
+  const adminKey = await crypto.subtle.importKey("raw", admin, { name: "X25519" }, false, []);
+  const shared = await crypto.subtle.deriveBits({ name: "X25519", public: adminKey }, eph.privateKey, 256);
+  const ephRaw = new Uint8Array(await crypto.subtle.exportKey("raw", eph.publicKey));
+  const hk = await crypto.subtle.importKey("raw", shared, "HKDF", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name: "HKDF", hash: "SHA-256", salt: enc("cue-request"), info: join(ephRaw, admin) },
+                                            hk, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc(JSON.stringify(obj))));
+  return b64(join(ephRaw, iv, ct));
+}
+// Zugangsschlüssel nur zum Ablegen von Anfragen, leicht verschleiert (wie in der App)
+function unhide(s) { const d = unb64(s).map(c => c ^ 0x5A).reverse(); return new TextDecoder().decode(d); }
+
+const form = document.getElementById("req"), msg = document.getElementById("msg"), send = document.getElementById("send");
+if (!CFG.repo || CFG.repo.startsWith("{{")) {
+  form.querySelectorAll("input, textarea, button").forEach(e => e.disabled = true);
+  msg.className = "msg";
+  msg.textContent = T("Anfragen sind noch nicht freigeschaltet.", "Key requests are not open yet.");
+}
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(form));
+  msg.className = "msg";
+  if (f.website) return;                                     // Falle für Spam Bots
+  const mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((f.mail || "").trim());
+  if (!f.first.trim() || !f.last.trim() || !mailOk) {
+    msg.className = "msg err"; msg.textContent = T("Bitte Vorname, Name und eine gültige E-Mail angeben.", "Please enter first name, last name and a valid email."); return;
+  }
+  if (!(window.crypto && crypto.subtle)) { msg.className = "msg err"; msg.textContent = T("Dein Browser ist zu alt. Bitte aktualisieren.", "Your browser is too old. Please update it."); return; }
+  send.disabled = true; msg.textContent = T("Wird gesendet …", "Sending …");
+  try {
+    const date = new Date().toISOString();
+    const sealed = await seal({ first: f.first.trim(), last: f.last.trim(), mail: f.mail.trim(), reason: (f.reason || "").trim(), date, lang: document.documentElement.lang });
+    const id = Array.from(crypto.getRandomValues(new Uint8Array(8)), b => b.toString(16).padStart(2, "0")).join("");
+    const body = { message: "Anfrage " + id, content: b64(enc(JSON.stringify({ v: 1, sealed, date }))) };
+    const r = await fetch(`https://api.github.com/repos/${CFG.repo}/contents/requests/${id}.json`, {
+      method: "PUT", headers: { Authorization: "Bearer " + unhide(CFG.tok), Accept: "application/vnd.github+json" }, body: JSON.stringify(body)
+    });
+    if (r.status !== 201) throw new Error(r.status);
+    form.reset();
+    msg.className = "msg ok"; msg.textContent = T("Danke! Deine Anfrage ist bei Luc angekommen.", "Thanks! Your request has reached Luc.");
+  } catch (err) {
+    msg.className = "msg err";
+    msg.textContent = err && err.name === "NotSupportedError"
+      ? T("Dein Browser unterstützt die Verschlüsselung nicht. Bitte Chrome, Edge, Firefox oder Safari aktualisieren.", "Your browser does not support the encryption. Please update Chrome, Edge, Firefox or Safari.")
+      : T("Senden hat nicht geklappt (" + (err.message || err) + "). Bitte später nochmals versuchen.", "Sending failed (" + (err.message || err) + "). Please try again later.");
+  } finally { send.disabled = false; }
+});
+</script>
+</body>
+</html>
