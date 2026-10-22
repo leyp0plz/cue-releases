@@ -104,6 +104,7 @@
   .beat b { color: var(--text); }
   .beat.big { color: var(--text); font-weight: 750; letter-spacing: -0.02em; line-height: 1.08; font-size: clamp(34px, 6vw, 58px); margin-bottom: 14px; }
   .beat.pause { margin-bottom: 44px; }
+  .beat.sign { font-size: 15px; letter-spacing: .08em; color: var(--faint); margin-top: 6px; }
   .grad { background: linear-gradient(90deg, #ffc446, var(--orange) 45%, var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   @media (prefers-reduced-motion: reduce) { .beat { opacity: 1; transform: none; transition: none; } }
   .support { margin-top: 18px; color: var(--dim); font-size: 15px; }
@@ -157,26 +158,30 @@
       <p class="beat big">Es begann nicht mit einem Video.</p>
       <p class="beat big pause"><span class="grad">Es begann mit einem Klang.</span></p>
       <p class="beat">Ein Riser, der einen ganzen Club anhebt. Ein Vocal Chop, drei Sekunden lang. Ein Effekt aus einem Live Set, den man nirgends kaufen kann.</p>
-      <p class="beat">Luc steht hinter dem Pult und will genau diesen Moment in Rekordbox. Nicht das ganze Video. Nicht das Bild. <b>Nur den Ton.</b> Nur diese Sekunden, ohne einen Hauch Qualität zu verlieren.</p>
-      <p class="beat pause">Also baut er sich ein Werkzeug. Link hinein. Start und Ende setzen, wie zwei Cue Punkte auf dem Deck. Heraus kommt <b>Audio</b>: verlustfrei, sauber geschnitten, bereit fürs nächste Set.</p>
+      <p class="beat">Ich stehe hinter dem Pult und will genau diesen Moment in Rekordbox. Nicht das ganze Video. Nicht das Bild. <b>Nur den Ton.</b> Nur diese Sekunden, ohne einen Hauch Qualität zu verlieren.</p>
+      <p class="beat pause">Also baue ich mir ein Werkzeug. Link hinein. Start und Ende setzen, wie zwei Cue Punkte auf dem Deck. Heraus kommt <b>Audio</b>: verlustfrei, sauber geschnitten, bereit fürs nächste Set.</p>
       <p class="beat big pause">Daher der Name: <span class="grad">Cue</span>.</p>
-      <p class="beat">Heute kann Cue auch Video. Aber im Herzen ist es geblieben, was es vom ersten Tag an war: <b>ein Werkzeug für den Sound.</b></p>
+      <p class="beat pause">Heute kann Cue auch Video. Aber im Herzen ist es geblieben, was es vom ersten Tag an war: <b>ein Werkzeug für den Sound.</b></p>
+      <p class="beat big"><span class="grad">Bald dein bester DJ Begleiter.</span></p>
+      <p class="beat sign">Luc Porchet, DJ</p>
     </div>
     <div data-en>
       <p class="beat big">It didn’t start with a video.</p>
       <p class="beat big pause"><span class="grad">It started with a sound.</span></p>
       <p class="beat">A riser that lifts an entire club. A vocal chop, three seconds long. An effect from a live set that you can’t buy anywhere.</p>
-      <p class="beat">Luc stands behind the decks and wants exactly that moment in Rekordbox. Not the whole video. Not the picture. <b>Just the sound.</b> Just those seconds, without losing a trace of quality.</p>
-      <p class="beat pause">So he builds himself a tool. Paste a link. Set start and end, like two cue points on a deck. Out comes <b>audio</b>: lossless, cleanly cut, ready for the next set.</p>
+      <p class="beat">I’m standing behind the decks and I want exactly that moment in Rekordbox. Not the whole video. Not the picture. <b>Just the sound.</b> Just those seconds, without losing a trace of quality.</p>
+      <p class="beat pause">So I build myself a tool. Paste a link. Set start and end, like two cue points on a deck. Out comes <b>audio</b>: lossless, cleanly cut, ready for the next set.</p>
       <p class="beat big pause">Hence the name: <span class="grad">Cue</span>.</p>
-      <p class="beat">Today Cue does video too. But at heart it is still what it was from day one: <b>a tool for sound.</b></p>
+      <p class="beat pause">Today Cue does video too. But at heart it is still what it was from day one: <b>a tool for sound.</b></p>
+      <p class="beat big"><span class="grad">Soon to be your best DJ companion.</span></p>
+      <p class="beat sign">Luc Porchet, DJ</p>
     </div>
   </section>
 
   <section>
     <h2 class="title" data-de>Installieren</h2><h2 class="title" data-en>Install</h2>
-    <p class="sub" data-de>Cue ist gesperrt, bis du einen Schlüssel von Luc Porchet eingibst.</p>
-    <p class="sub" data-en>Cue stays locked until you enter a key from Luc Porchet.</p>
+    <p class="sub" data-de>Cue ist gesperrt, bis du einen Schlüssel von mir eingibst.</p>
+    <p class="sub" data-en>Cue stays locked until you enter a key from me.</p>
     <div class="steps">
       <div class="box">
         <h3>Mac</h3>
@@ -213,8 +218,8 @@
 
   <section id="key">
     <h2 class="title" data-de>Schlüssel anfragen</h2><h2 class="title" data-en>Request a key</h2>
-    <p class="sub" data-de>Luc Porchet erhält deine Anfrage verschlüsselt und schickt dir den Schlüssel per Mail.</p>
-    <p class="sub" data-en>Luc Porchet receives your request encrypted and sends you the key by email.</p>
+    <p class="sub" data-de>Ich erhalte deine Anfrage verschlüsselt und schicke dir den Schlüssel per Mail.</p>
+    <p class="sub" data-en>I receive your request encrypted and send you the key by email.</p>
     <form class="req" id="req" novalidate>
       <label><span data-de>Vorname</span><span data-en>First name</span><input name="first" autocomplete="given-name" required maxlength="80"></label>
       <label><span data-de>Name</span><span data-en>Last name</span><input name="last" autocomplete="family-name" required maxlength="80"></label>
@@ -225,11 +230,11 @@
         <button class="btn primary" type="submit" id="send"><span data-de>Anfrage senden</span><span data-en>Send request</span></button>
         <span class="msg" id="msg" role="status"></span>
       </div>
-      <div class="row hint" data-de>Deine Angaben sind nur für Luc Porchet lesbar und werden nur für den Schlüssel verwendet.</div>
-      <div class="row hint" data-en>Only Luc Porchet can read your details. They are only used for your key.</div>
+      <div class="row hint" data-de>Deine Angaben kann nur ich lesen, und ich verwende sie nur für deinen Schlüssel.</div>
+      <div class="row hint" data-en>Only I can read your details, and I only use them for your key.</div>
     </form>
-    <p class="support" data-de>Fragen oder Probleme? Schreib an <a href="mailto:DJ@luc-music.com">DJ@luc-music.com</a></p>
-    <p class="support" data-en>Questions or problems? Write to <a href="mailto:DJ@luc-music.com">DJ@luc-music.com</a></p>
+    <p class="support" data-de>Fragen oder Probleme? Schreib mir an <a href="mailto:DJ@luc-music.com">DJ@luc-music.com</a></p>
+    <p class="support" data-en>Questions or problems? Write to me at <a href="mailto:DJ@luc-music.com">DJ@luc-music.com</a></p>
   </section>
 
   <footer>
@@ -339,7 +344,7 @@ form.addEventListener("submit", async e => {
     });
     if (r.status !== 201) throw new Error(r.status);
     form.reset();
-    msg.className = "msg ok"; msg.textContent = T("Danke! Deine Anfrage ist bei Luc angekommen.", "Thanks! Your request has reached Luc.");
+    msg.className = "msg ok"; msg.textContent = T("Danke! Deine Anfrage ist bei mir angekommen.", "Thanks! Your request has reached me.");
   } catch (err) {
     msg.className = "msg err";
     msg.textContent = err && err.name === "NotSupportedError"
